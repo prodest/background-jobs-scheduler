@@ -11,12 +11,15 @@ namespace BackgroundJobsScheduler
     {
         public static void Main(string[] args)
         {
+            var port = Environment.GetEnvironmentVariable("PORT") ?? "3001";
+            var requestPath = Environment.GetEnvironmentVariable("REQUEST_PATH");
+            var url = $"http://*:{port}{requestPath}";
+
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .UseUrls(url)
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseApplicationInsights()
                 .Build();
 
             host.Run();
