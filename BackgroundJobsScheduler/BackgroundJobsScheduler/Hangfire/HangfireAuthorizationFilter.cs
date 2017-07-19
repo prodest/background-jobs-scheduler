@@ -28,14 +28,3 @@ namespace JobScheduler.Hangfire
         }
     }
 }
-
-/*
- 
-     "AutenticacaoIdentityServer": {
-    "Authority": "https://acessocidadao.es.gov.br/is/",
-    "RequireHttpsMetadata": "false",
-    "AllowedScopes": [ "ApiOrganograma" ],
-    "AutomaticAuthenticate": "true"
-  }
-     
-     */

@@ -1,4 +1,7 @@
-﻿using Hangfire;
+﻿using BackgroundJobsScheduler.Common;
+using BackgroundJobsScheduler.Common.Base;
+using BackgroundJobsScheduler.Hangfire;
+using Hangfire;
 using Hangfire.AspNetCore;
 using Hangfire.SqlServer;
 using JobScheduler.Hangfire;
@@ -33,6 +36,10 @@ namespace BackgroundJobsScheduler
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AutenticacaoIdentityServer>(Configuration.GetSection("AutenticacaoIdentityServer"));
+
+            services.AddSingleton<IClientAccessTokenProvider, AcessoCidadaoClientAccessToken>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             IServiceProvider provider = services.BuildServiceProvider();
             IServiceScopeFactory scopeFactory = (IServiceScopeFactory)provider.GetService(typeof(IServiceScopeFactory));
 
@@ -99,6 +106,8 @@ namespace BackgroundJobsScheduler
 
             app.UseHangfireDashboard("/hangfire", new DashboardOptions { AppPath = $"{Environment.GetEnvironmentVariable("REQUEST_PATH")}/", Authorization = new[] { new HangfireAuthorizationFilter(), } });
             app.UseHangfireServer();
+
+            app.UseHangfire();
 
             app.UseMvc();
 
