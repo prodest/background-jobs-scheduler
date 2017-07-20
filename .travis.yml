@@ -1,0 +1,25 @@
+language: csharp
+dist: trusty
+sudo: required
+mono: none
+dotnet: 1.0.3
+services:
+  - docker
+install:
+  - nvm install 6.10
+script: 
+  - . ./scripts/.travis.sh
+deploy:
+  - provider: script
+    script: . ./scripts/.develop.sh
+    on:
+      branch: develop
+  - provider: script
+    script: . ./scripts/.release.sh
+    on:
+      all_branches: true
+      condition: "$TRAVIS_BRANCH =~ ^release.*$"
+  - provider: script
+    script: . ./scripts/.master.sh
+    on:
+      branch: master
