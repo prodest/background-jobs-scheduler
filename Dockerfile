@@ -5,4 +5,4 @@ WORKDIR /home/bin
 
 EXPOSE 3001/tcp
 
-CMD ["./WebAPI"]
+CMD ["./BackgroundJobsScheduler"]
