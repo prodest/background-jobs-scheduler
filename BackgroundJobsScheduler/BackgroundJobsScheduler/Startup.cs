@@ -105,8 +105,10 @@ namespace BackgroundJobsScheduler
             app.UseOpenIdConnectAuthentication(oico);
 
             app.UseHangfireDashboard("/hangfire", new DashboardOptions { AppPath = $"{Environment.GetEnvironmentVariable("REQUEST_PATH")}/", Authorization = new[] { new HangfireAuthorizationFilter(), } });
-            app.UseHangfireServer();
 
+            BackgroundJobServerOptions options = new BackgroundJobServerOptions { WorkerCount = 1 };
+            app.UseHangfireServer(options);
+            
             app.UseHangfire();
 
             app.UseMvc();
